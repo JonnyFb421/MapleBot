@@ -1,4 +1,4 @@
-from keys import KeyLocations
+from osk_key_map import KeyLocations
 import pyautogui
 import os
 import time
