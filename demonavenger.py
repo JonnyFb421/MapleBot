@@ -75,7 +75,7 @@ class DemonAvenger(MapleChar):
         
     def up_a_level(self):
         """Presses ALT UP UP for a super vertical jump"""
-        time.sleep(2)
+        time.sleep(0.5)
         pyautogui.click(self.ALT)
         pyautogui.doubleClick(self.UP)
         pyautogui.mouseDown(self.UP) 

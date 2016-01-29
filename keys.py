@@ -1,4 +1,5 @@
 import os
+import sys
 import platform
 import logging
 import pyautogui
@@ -13,19 +14,21 @@ Currently OSK's height must be minimized for all keys to be detected.
 class KeyLocations():
     def __init__(self):
         logging.basicConfig(format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.INFO)
-        logging.info('Starting key matching')
         os_version = platform.platform().split('-')[:2]
         os_version = ' '.join(os_version)
+        #os_version = 'Windows 7'
+        #os_version = 'Windows 10'
         osk_filepath = os.path.abspath(r'assets\osk\{}'.format(os_version))
-        logging.info("Looking for On-Sreen Keyboard")
-        osk_icon = pyautogui.locateCenterOnScreen(os.path.join(osk_filepath, 'OSK.png'))
+        logging.info("Looking for On-Screen Keyboard")
+        osk_icon = pyautogui.locateCenterOnScreen(os.path.join(osk_filepath, 'OSK_ICON.png'))
         if not osk_icon:
             sys.exit("Unable to detect On-Screen Keyboard")
         logging.info("On-Screen keyboard detected.")
-        OSK_LOCATION = (osk_icon[0] - 25, osk_icon[1], 500, 500)
+        OSK_LOCATION = (osk_icon[0] - 25, osk_icon[1], 1000, 500)
+        logging.info('Starting key matching')
         self.Q = pyautogui.locateCenterOnScreen(os.path.join(osk_filepath, 'Q.png'), region=OSK_LOCATION, grayscale=True)
         self.W = pyautogui.locateCenterOnScreen(os.path.join(osk_filepath, 'W.png'), region=OSK_LOCATION, grayscale=True)
-        #Space between keys
+        #Get next key's position by getting difference between keys
         pixel_space = (self.W[0] - self.Q[0])
         self.E = (self.W[0] + pixel_space, self.Q[1])
         self.R = (self.E[0] + pixel_space, self.Q[1])
@@ -55,7 +58,8 @@ class KeyLocations():
         self.M = (self.N[0] + pixel_space, self.Z[1])
         #
         self.ESC = pyautogui.locateCenterOnScreen(os.path.join(osk_filepath, 'ESC.png'), region=OSK_LOCATION, grayscale=True)
-        self.TILDA = (self.ESC[0] + pixel_space, self.ESC[1])
+        #Starting from Tilda for Windows 7 compatability 
+        self.TILDA = pyautogui.locateCenterOnScreen(os.path.join(osk_filepath, 'TILDA.png'), region=OSK_LOCATION, grayscale=True)
         self.ONE = (self.TILDA[0] + pixel_space, self.ESC[1])
         self.TWO = (self.ONE[0] + pixel_space, self.ESC[1])
         self.THREE = (self.TWO[0] + pixel_space, self.ESC[1])

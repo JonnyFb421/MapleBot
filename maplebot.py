@@ -47,7 +47,6 @@ class MapleChar(KeyLocations):
         
     def loot(self):
         """Auto loots the area"""
-        time.sleep(1)
         loot_directions = [self.LEFT, self.RIGHT]
         for direction in loot_directions:
             for x in range(5):
@@ -64,7 +63,6 @@ class MapleChar(KeyLocations):
                 
     def loot_corner(self, direction):
         """Auto loots corner of area which you are facing"""
-        time.sleep(1)
         for x in range(2):
             pyautogui.mouseDown(self.Z)
             time.sleep(0.5)
