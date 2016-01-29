@@ -3,6 +3,7 @@ import pyautogui
 import os
 import time
 import random
+import logging
 
 """
 Author: Jonathon Carlyon (JonathonCarlyon@gmail.com)
@@ -17,6 +18,7 @@ class MapleChar(KeyLocations):
         self.start_time = time.time()
         self.direction = 'right'
         self.health_img = os.path.abspath('assets\health.png')
+        self.mana_img = os.path.abspath('assets\mana.png')
         self.potion_count = 0
         
     #Character movement
@@ -93,14 +95,24 @@ class MapleChar(KeyLocations):
         pyautogui.mouseUp()
         
     def heal(self):
+        """Checks health bar, if it's low use 2 potions bound to '4' """
         potions_to_chug = 2
         logging.info('Checking health.')
         while not pyautogui.locateOnScreen(self.health_img):
             for x in range(potions_to_chug):
-                pyautogui.click(self.T)
+                pyautogui.click(self.FOUR)
                 time.sleep(0.3)
             self.potion_count += potions_to_chug
             logging.info('Used %d potions.', self.potion_count)
         logging.info('Done healing.')
-    #add def mana
     
+    def mana(self):
+        """Checks health bar, if it's low use 2 potions bound to '5' """
+        potions_to_chug = 2
+        logging.info('Checking mana.')
+        while not pyautogui.locateOnScreen(self.mana_img):
+            logging.info('Drinking mana pots.')
+            for x in range(potions_to_chug):
+                pyautogui.click(self.FIVE)
+                time.sleep(0.3)
+        logging.info('Mana replenished.')
